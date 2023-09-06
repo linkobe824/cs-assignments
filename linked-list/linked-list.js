@@ -2,12 +2,7 @@ const ll = LinkedList();
 ll.append(0);
 ll.append(1);
 ll.append(2);
-
-
-
-
-
-
+ll.append(3);
 
 
 function Node(data) {
@@ -29,8 +24,7 @@ function LinkedList() {
       this.tail.next = newNode;
       this.tail = newNode;
     }
-    this.length += 1;
-    console.log(this);
+    this.length++;
   }
 
   // Adds a new value at the start of the list
@@ -43,8 +37,7 @@ function LinkedList() {
       newNode.next = this.head;
       this.head = newNode;
     }
-    this.length += 1;
-    console.log(this);
+    this.length++;
   }
 
   // Returns the total number of nodes in the list
@@ -85,7 +78,7 @@ function LinkedList() {
   // removes the last element form the list and return it
   function pop() {
     // verificar si la lista esta vacia
-    if (this.head === null){
+    if (!this.size()){
       console.log("List is empty");
       return;
     }
@@ -110,7 +103,24 @@ function LinkedList() {
 
     this.length--;
     return poppedNode;
+  }
 
+  function contains(value) {
+    // verificar que lista no este vacia
+    if (!this.size()){
+      console.log("List is empty");
+      return;
+    } 
+    
+    // atravesar la lista hasta que encuentre el valor o llegue al final
+    let cur = this.head;
+    while (cur != null) {
+      if (cur.data === value) {
+        return true;
+      }
+      cur = cur.next
+    }
+    return false;
   }
 
 
@@ -126,5 +136,6 @@ function LinkedList() {
     getTail,
     at,
     pop,
+    contains,
   };
 }
