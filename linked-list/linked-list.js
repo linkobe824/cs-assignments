@@ -2,8 +2,11 @@ const ll = LinkedList();
 ll.append(0);
 ll.append(1);
 ll.append(2);
-ll.append(3);
-ll.append(4);
+
+
+
+
+
 
 
 
@@ -15,21 +18,6 @@ function Node(data) {
 }
 
 function LinkedList() {
-  // Adds a new value at the end of the list
-  // function append(value) {
-  //   const newNode = Node(value);
-  //   if (this.head == null) {
-  //     this.head = newNode;
-  //     this.tail = newNode;
-  //   } else {
-  //     let cur = this.head;
-  //     while (cur.next != null) {
-  //       cur = cur.next;
-  //     }
-  //     cur.next = newNode;
-  //     this.tail = newNode;
-  //   }
-  //   console.log(this);
 
   // Adds a new value at the end of the list
   function append(value) {
@@ -94,6 +82,37 @@ function LinkedList() {
     return cur;
   }
 
+  // removes the last element form the list and return it
+  function pop() {
+    // verificar si la lista esta vacia
+    if (this.head === null){
+      console.log("List is empty");
+      return;
+    }
+
+    let poppedNode = null;
+    // verificar si solo hay un elemento en la lista
+    if (this.head === this.tail) {
+      poppedNode = this.head;
+      this.head = null;
+      this.tail = null;
+    }
+    else{
+      // atravesar la lista hasta un nodo antes del tail.
+      let cur = this.head;
+      while (cur.next != this.tail) {
+        cur = cur.next;
+      }
+      poppedNode = this.tail;
+      cur.next = null;
+      this.tail = cur;
+    }
+
+    this.length--;
+    return poppedNode;
+
+  }
+
 
   return {
     head: null,
@@ -106,5 +125,6 @@ function LinkedList() {
     getHead,
     getTail,
     at,
+    pop,
   };
 }
