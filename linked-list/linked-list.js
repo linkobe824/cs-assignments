@@ -5,6 +5,8 @@ ll.append(3);
 
 ll.prepend(1);
 
+console.log(ll.size());
+
 function Node(data) {
   return {
     data,
@@ -39,27 +41,36 @@ function LinkedList() {
       this.tail.next = newNode;
       this.tail = newNode;
     }
+    this.length += 1;
     console.log(this);
   }
 
   // Adds a new value at the start of the list
-  function prepend(value){
+  function prepend(value) {
     const newNode = Node(value);
     if (this.head === null) {
       this.head = newNode;
       this.tail = newNode;
-    }
-    else {
+    } else {
       newNode.next = this.head;
       this.head = newNode;
     }
+    this.length += 1;
     console.log(this);
+  }
+
+  // Returns the total number of nodes in the list
+  function size() {
+    return this.length;
   }
 
   return {
     head: null,
     tail: null,
+    length: 0,
+
     append,
     prepend,
+    size,
   };
 }
