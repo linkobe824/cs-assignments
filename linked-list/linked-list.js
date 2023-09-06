@@ -1,11 +1,11 @@
 const ll = LinkedList();
-ll.append(5);
-ll.append(7);
+ll.append(0);
+ll.append(1);
+ll.append(2);
 ll.append(3);
+ll.append(4);
 
-ll.prepend(1);
 
-console.log(ll.getTail())
 
 function Node(data) {
   return {
@@ -74,6 +74,26 @@ function LinkedList() {
     return this.tail;
   }
 
+  // Returns the node at the given index
+  function at(idx) {
+    // verificar tamaño
+    if (this.head === null || idx > this.size() - 1) {
+      console.log("Index out of range")
+      return
+    }
+    // verificar si idx es el inicio o fin de la lista
+    if (idx === 0) return this.getHead();
+    if (idx === this.size() - 1) return this.getTail();
+
+    let count = 0;
+    let cur = this.head;
+    while (count < idx) {
+      cur = cur.next;
+      count++;
+    }
+    return cur;
+  }
+
 
   return {
     head: null,
@@ -85,5 +105,6 @@ function LinkedList() {
     size,
     getHead,
     getTail,
+    at,
   };
 }
