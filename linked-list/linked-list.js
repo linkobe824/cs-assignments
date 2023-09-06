@@ -4,8 +4,10 @@ ll.append(1);
 ll.append(5);
 ll.append(3);
 
-ll.toString()
+ll.toString();
 
+ll.insertAt(-1, 3)
+ll.toString();
 
 function Node(data) {
   return {
@@ -105,6 +107,7 @@ function LinkedList() {
     return poppedNode;
   }
 
+  //  returns true if the passed in value is in the list and otherwise returns false.
   function contains(value) {
     // verificar que lista no este vacia
     if (!this.size()) {
@@ -122,6 +125,7 @@ function LinkedList() {
     return false;
   }
 
+  // returns the index of the node containing value, or null if not found.
   function find(value) {
     // verificar que lista no este vacia
     if (!this.size()) {
@@ -130,7 +134,7 @@ function LinkedList() {
     }
     // atravesar la lista hasta que encuentre el valor o llegue al final
     let cur = this.head;
-    let count  = 0;
+    let count = 0;
     while (cur != null) {
       if (cur.data === value) {
         return count;
@@ -141,8 +145,8 @@ function LinkedList() {
     return null;
   }
 
-  function toString(){
-    let stringList = "";
+  function toString() {
+    let stringList = '';
     let cur = this.head;
     while (cur != null) {
       stringList += `( ${cur.data} ) -> `;
@@ -150,6 +154,26 @@ function LinkedList() {
     }
     stringList += 'null';
     console.log(stringList);
+  }
+
+  // inserts a new node with the provided value at the given index.
+  function insertAt(value, index) {
+    if (index > this.size - 1) {
+      console.log("Index out of range");
+      return;
+    }
+    if (index === 0){
+      this.prepend(value);
+      return;
+    }
+
+    const newNode = Node(value);
+
+    const prevNode = this.at(index - 1)
+    const nextNode = prevNode.next;
+    
+    prevNode.next = newNode;
+    newNode.next = nextNode;
   }
 
   return {
@@ -167,5 +191,6 @@ function LinkedList() {
     contains,
     find,
     toString,
+    insertAt,
   };
 }
