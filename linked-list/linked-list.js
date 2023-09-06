@@ -5,7 +5,7 @@ ll.append(3);
 
 ll.prepend(1);
 
-console.log(ll.size());
+console.log(ll.getTail())
 
 function Node(data) {
   return {
@@ -64,6 +64,17 @@ function LinkedList() {
     return this.length;
   }
 
+  // Returns the first node in the list
+  function getHead() {
+    return this.head;
+  }
+
+  // Returns the last node in the list
+  function getTail() {
+    return this.tail;
+  }
+
+
   return {
     head: null,
     tail: null,
@@ -72,5 +83,7 @@ function LinkedList() {
     append,
     prepend,
     size,
+    getHead,
+    getTail,
   };
 }
