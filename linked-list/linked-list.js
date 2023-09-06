@@ -6,7 +6,7 @@ ll.append(3);
 
 ll.toString();
 
-ll.insertAt(-1, 3)
+ll.removeAt(0);
 ll.toString();
 
 function Node(data) {
@@ -159,21 +159,56 @@ function LinkedList() {
   // inserts a new node with the provided value at the given index.
   function insertAt(value, index) {
     if (index > this.size - 1) {
-      console.log("Index out of range");
+      console.log('Index out of range');
       return;
     }
-    if (index === 0){
+    if (index === 0) {
       this.prepend(value);
       return;
     }
 
     const newNode = Node(value);
-
-    const prevNode = this.at(index - 1)
+    const prevNode = this.at(index - 1);
     const nextNode = prevNode.next;
-    
+
     prevNode.next = newNode;
     newNode.next = nextNode;
+    this.length++;
+  }
+
+  //removes the node at the given index.
+  function removeAt(index) {
+    if (this.size() === 0 || index > this.size() - 1) {
+      console.log("Index out of range");
+      return;
+    }
+    // si es el ultimo elemento
+    if (index === this.size() - 1) {
+      this.pop();
+      return;
+    }
+    // almacenar nodo a remover en variable
+    const removedNode = this.at(index);
+    // si solo es un elemento
+    if (this.size() === 1) {
+      this.head = null;
+      this.tail = null;
+    }
+    // si es el primer elemento
+    else if (index === 0) {
+      this.head = this.head.next;
+      removedNode.next = null;
+    }
+    else {
+      const prevNode = this.at(index - 1);
+      const nextNode = removedNode.next;
+
+      removedNode.next = null;
+      prevNode.next = nextNode;
+    }
+    
+    this.length --;
+    return removedNode;
   }
 
   return {
@@ -192,5 +227,6 @@ function LinkedList() {
     find,
     toString,
     insertAt,
+    removeAt,
   };
 }
