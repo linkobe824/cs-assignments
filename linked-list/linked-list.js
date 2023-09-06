@@ -4,7 +4,7 @@ ll.append(1);
 ll.append(5);
 ll.append(3);
 
-console.log(ll.find(0))
+ll.toString()
 
 
 function Node(data) {
@@ -141,6 +141,17 @@ function LinkedList() {
     return null;
   }
 
+  function toString(){
+    let stringList = "";
+    let cur = this.head;
+    while (cur != null) {
+      stringList += `( ${cur.data} ) -> `;
+      cur = cur.next;
+    }
+    stringList += 'null';
+    console.log(stringList);
+  }
+
   return {
     head: null,
     tail: null,
@@ -155,5 +166,6 @@ function LinkedList() {
     pop,
     contains,
     find,
+    toString,
   };
 }
