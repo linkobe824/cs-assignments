@@ -1,8 +1,10 @@
 const ll = LinkedList();
 ll.append(0);
 ll.append(1);
-ll.append(2);
+ll.append(5);
 ll.append(3);
+
+console.log(ll.find(0))
 
 
 function Node(data) {
@@ -13,7 +15,6 @@ function Node(data) {
 }
 
 function LinkedList() {
-
   // Adds a new value at the end of the list
   function append(value) {
     const newNode = Node(value);
@@ -59,8 +60,8 @@ function LinkedList() {
   function at(idx) {
     // verificar tamaño
     if (this.head === null || idx > this.size() - 1) {
-      console.log("Index out of range")
-      return
+      console.log('Index out of range');
+      return;
     }
     // verificar si idx es el inicio o fin de la lista
     if (idx === 0) return this.getHead();
@@ -78,8 +79,8 @@ function LinkedList() {
   // removes the last element form the list and return it
   function pop() {
     // verificar si la lista esta vacia
-    if (!this.size()){
-      console.log("List is empty");
+    if (!this.size()) {
+      console.log('List is empty');
       return;
     }
 
@@ -89,8 +90,7 @@ function LinkedList() {
       poppedNode = this.head;
       this.head = null;
       this.tail = null;
-    }
-    else{
+    } else {
       // atravesar la lista hasta un nodo antes del tail.
       let cur = this.head;
       while (cur.next != this.tail) {
@@ -107,22 +107,39 @@ function LinkedList() {
 
   function contains(value) {
     // verificar que lista no este vacia
-    if (!this.size()){
-      console.log("List is empty");
+    if (!this.size()) {
+      console.log('List is empty');
       return;
-    } 
-    
+    }
     // atravesar la lista hasta que encuentre el valor o llegue al final
     let cur = this.head;
     while (cur != null) {
       if (cur.data === value) {
         return true;
       }
-      cur = cur.next
+      cur = cur.next;
     }
     return false;
   }
 
+  function find(value) {
+    // verificar que lista no este vacia
+    if (!this.size()) {
+      console.log('List is empty');
+      return;
+    }
+    // atravesar la lista hasta que encuentre el valor o llegue al final
+    let cur = this.head;
+    let count  = 0;
+    while (cur != null) {
+      if (cur.data === value) {
+        return count;
+      }
+      count++;
+      cur = cur.next;
+    }
+    return null;
+  }
 
   return {
     head: null,
@@ -137,5 +154,6 @@ function LinkedList() {
     at,
     pop,
     contains,
+    find,
   };
 }
