@@ -2,7 +2,7 @@ const listOfElements = [12,65,48,95,120,32,4,65,98,45,1,2,78];
 
 let tree = Tree(listOfElements);
 tree.prettyPrint();
-tree.insert(11)
+tree.insert(33)
 tree.prettyPrint()
 
 function Node(value) {
@@ -55,13 +55,18 @@ function Tree(arr) {
             }
             parent = parent.left;
         }
-        else {
+        else if (newNode.value > parent.value){
             if (parent.right === null) {
                 parent.right = newNode;
                 return
             }
             parent = parent.right;
         }
+        else {
+            console.log("Value already exists in Tree");
+            return
+        }
+        
     }
   }
 
