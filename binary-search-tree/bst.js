@@ -2,7 +2,7 @@ const listOfElements = [12, 65, 48, 95, 120, 32, 4, 33];
 
 let tree = Tree(listOfElements);
 tree.prettyPrint();
-console.log(tree.find(48))
+
 
 function Node(value) {
   return {
@@ -147,8 +147,28 @@ function Tree(arr) {
     return helper(root, value);
   }
 
+  function levelOrder(fcn = 0) {
+    let q = [root];
+    const res = [];
 
+    while (q.length > 0) {
+        let visited = q.shift();
+        if(fcn) {
+            fcn(visited);
+        }
+        res.push(visited.value);
+        if (visited.left != null){
+            q.push(visited.left)
+        }
+        if (visited.right != null) {
+            q.push(visited.right)
+        }
+    }
 
+    return res;
+  }
+
+ 
 
 
 
@@ -174,5 +194,6 @@ function Tree(arr) {
     insert,
     remove,
     find,
+    levelOrder,
   };
 }
