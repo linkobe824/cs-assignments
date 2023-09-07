@@ -1,9 +1,9 @@
-const listOfElements = [12,65,48,95,120,32,4,65,98,45,1,2,78];
+const listOfElements = [12, 65, 48, 95, 120, 32, 4, 33];
 
 let tree = Tree(listOfElements);
 tree.prettyPrint();
-tree.insert(33)
-tree.prettyPrint()
+tree.remove(4);
+tree.prettyPrint();
 
 function Node(value) {
   return {
@@ -48,30 +48,82 @@ function Tree(arr) {
 
     // recorre nodos hasta que un hijo adecuado este vacio.
     while (true) {
-        if (newNode.value < parent.value) {
-            if (parent.left === null) {
-                parent.left = newNode;
-                return;
-            }
-            parent = parent.left;
+      if (newNode.value < parent.value) {
+        if (parent.left === null) {
+          parent.left = newNode;
+          return;
         }
-        else if (newNode.value > parent.value){
-            if (parent.right === null) {
-                parent.right = newNode;
-                return
-            }
-            parent = parent.right;
+        parent = parent.left;
+      } else if (newNode.value > parent.value) {
+        if (parent.right === null) {
+          parent.right = newNode;
+          return;
         }
-        else {
-            console.log("Value already exists in Tree");
-            return
-        }
-        
+        parent = parent.right;
+      } else {
+        console.log('Value already exists in Tree');
+        return;
+      }
     }
   }
 
   function remove(value) {
-    
+    function helper(root, value) {
+      if (root === null) {
+        console.log("Value is not in tree")
+        return;
+      }
+      // root.child = recursive call para que al retornar el root (nodo)
+      // de helper(), este se vuelva el hijo de root
+      if (value < root.value) {
+        root.left = helper(root.left, value);
+      } else if (value > root.value) {
+        root.right = helper(root.right, value);
+      } else {
+        // se encontro el nodo a eliminar
+        //caso 1. no tiene hijos
+        if (root.left === null && root.right === null) {
+          delete root;
+          root = null;
+        }
+        // caso 2. solo un hijo
+        else if (root.left === null) {
+          let temp = root;
+          root = root.right;
+          delete temp;
+        } else if (root.right === null) {
+          let temp = root;
+          root = root.left;
+          delete temp;
+        }
+        // caso 3. ambos hijos
+        else {
+          let successorParent = root;
+
+          //encontrar al minimo del sub-tree derecho
+          let successor = root.right;
+          while (successor.left != null) {
+            successorParent = successor;
+            successor = successor.left;
+          }
+
+          if (successorParent != root) {
+            successorParent.left = successor.right;
+          } else {
+            successorParent.right = successor.right;
+          }
+
+          // copia el valor del sucesor al root
+          root.value = successor.value;
+
+          // elimina sucesor y retorna el root
+          delete successor;
+        }
+      }
+      return root;
+    }
+
+    return helper(root, value);
   }
 
 
@@ -88,12 +140,12 @@ function Tree(arr) {
     }
   }
 
-  
   return {
     root,
 
     prettyPrint,
     insert,
     remove,
+    find,
   };
 }
