@@ -2,7 +2,7 @@ const listOfElements = [12, 65, 48, 95, 120, 32, 4, 33];
 
 let tree = Tree(listOfElements);
 tree.prettyPrint();
-console.log(tree.levelOrderRec())
+console.log(tree.postorder())
 
 function Node(value) {
   return {
@@ -177,8 +177,44 @@ function Tree(arr) {
     return levelOrderRec(q, res);
   }
 
- 
+  function preorder(){
+    const visited = [];
+    
+    function traverse(node) {
+        visited.push(node.value);
+        if(node.left) traverse(node.left);
+        if(node.right) traverse(node.right);
+    }
 
+    traverse(root);
+    return visited;
+  }
+
+  function inorder(){
+    const visited = []
+
+    function traverse(node) {
+        if(node.left) traverse(node.left);
+        visited.push(node.value);
+        if(node.right) traverse(node.right);
+    }
+    
+    traverse(root);
+    return visited;
+  }
+
+  function postorder(){
+    const visited = [];
+
+    function traverse(node) {
+        if(node.left) traverse(node.left);
+        if(node.right) traverse(node.right);
+        visited.push(node.value);
+    }
+
+    traverse(root);
+    return visited;
+  }
 
 
 
@@ -205,5 +241,8 @@ function Tree(arr) {
     find,
     levelOrder,
     levelOrderRec,
+    inorder,
+    preorder,
+    postorder,
   };
 }
