@@ -2,8 +2,7 @@ const listOfElements = [12, 65, 48, 95, 120, 32, 4, 33];
 
 let tree = Tree(listOfElements);
 tree.prettyPrint();
-tree.remove(4);
-tree.prettyPrint();
+console.log(tree.find(48))
 
 function Node(value) {
   return {
@@ -125,6 +124,34 @@ function Tree(arr) {
 
     return helper(root, value);
   }
+
+  function find(value) {
+    function helper(root, value) {
+        if (root === null) {
+            console.log("Value not found");
+            return;
+        }
+        
+        if(value < root.value){
+            helper(root.left, value);
+        }
+        else if (value > root.value) {
+            helper(root.right, value);
+        }
+        else{
+            console.log("founded");
+            return root;
+        }
+    }
+
+    return helper(root, value);
+  }
+
+
+
+
+
+
 
 
   function prettyPrint(node = root, prefix = '', isLeft = true) {
