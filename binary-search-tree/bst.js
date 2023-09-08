@@ -1,9 +1,9 @@
-const listOfElements = [12, 65, 48, 95, 120, 32, 4, 33];
+const listOfElements = [12, 65, 48, 95, 15, 32, 4, 33];
 
 let tree = Tree(listOfElements);
 tree.prettyPrint();
-let otherNode = tree.find(77);
-console.log(tree.depth(otherNode));
+
+
 
 function Node(value) {
   return {
@@ -243,6 +243,22 @@ function Tree(arr) {
       }
     }
   }
+  // Un arbol balanceado es aquel en el que la diferencia de altura
+  // de el subtree derecho y el subtree izquierdo es <= 1 para cada nodo
+  function isBalanced() {
+    // utilizar bfs para visitar cada nodo
+    let q = [root] 
+    
+    while (q.length > 0) {
+        let node = q.shift();
+        // verificar balance
+        if (Math.abs(height(node.left) - height(node.right)) > 1) return false
+
+        if(node.left) q.push(node.left);
+        if(node.right) q.push(node.right);
+    }
+    return true;
+  }
 
   function prettyPrint(node = root, prefix = '', isLeft = true) {
     if (node === null) {
@@ -271,5 +287,6 @@ function Tree(arr) {
     postorder,
     height,
     depth,
+    isBalanced,
   };
 }
