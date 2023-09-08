@@ -2,7 +2,8 @@ const listOfElements = [12, 65, 48, 95, 120, 32, 4, 33];
 
 let tree = Tree(listOfElements);
 tree.prettyPrint();
-console.log(tree.postorder())
+let otherNode = tree.find(77);
+console.log(tree.depth(otherNode));
 
 function Node(value) {
   return {
@@ -69,7 +70,7 @@ function Tree(arr) {
   function remove(value) {
     function helper(root, value) {
       if (root === null) {
-        console.log("Value is not in tree")
+        console.log('Value is not in tree');
         return;
       }
       // root.child = recursive call para que al retornar el root (nodo)
@@ -126,25 +127,18 @@ function Tree(arr) {
   }
 
   function find(value) {
-    function helper(root, value) {
-        if (root === null) {
-            console.log("Value not found");
-            return;
-        }
-        
-        if(value < root.value){
-            helper(root.left, value);
-        }
-        else if (value > root.value) {
-            helper(root.right, value);
-        }
-        else{
-            console.log("founded");
-            return root;
-        }
+    let node = root;
+    while (node != null) {
+      if (value < node.value) {
+        node = node.left;
+      } else if (value > node.value) {
+        node = node.right;
+      } else {
+        return node;
+      }
     }
-
-    return helper(root, value);
+    console.log('value not found');
+    return null;
   }
 
   function levelOrder(fcn = 0) {
@@ -152,17 +146,17 @@ function Tree(arr) {
     const res = [];
 
     while (q.length > 0) {
-        let visited = q.shift();
-        if(fcn) {
-            fcn(visited);
-        }
-        res.push(visited.value);
-        if (visited.left){
-            q.push(visited.left)
-        }
-        if (visited.right) {
-            q.push(visited.right)
-        }
+      let visited = q.shift();
+      if (fcn) {
+        fcn(visited);
+      }
+      res.push(visited.value);
+      if (visited.left) {
+        q.push(visited.left);
+      }
+      if (visited.right) {
+        q.push(visited.right);
+      }
     }
     return res;
   }
@@ -171,53 +165,84 @@ function Tree(arr) {
     if (q.length === 0) return res;
 
     const visited = q.shift();
-    res.push(visited.value)
+    res.push(visited.value);
     if (visited.left) q.push(visited.left);
     if (visited.right) q.push(visited.right);
     return levelOrderRec(q, res);
   }
 
-  function preorder(){
-    const visited = [];
-    
-    function traverse(node) {
-        visited.push(node.value);
-        if(node.left) traverse(node.left);
-        if(node.right) traverse(node.right);
-    }
-
-    traverse(root);
-    return visited;
-  }
-
-  function inorder(){
-    const visited = []
-
-    function traverse(node) {
-        if(node.left) traverse(node.left);
-        visited.push(node.value);
-        if(node.right) traverse(node.right);
-    }
-    
-    traverse(root);
-    return visited;
-  }
-
-  function postorder(){
+  function preorder() {
     const visited = [];
 
     function traverse(node) {
-        if(node.left) traverse(node.left);
-        if(node.right) traverse(node.right);
-        visited.push(node.value);
+      visited.push(node.value);
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
     }
 
     traverse(root);
     return visited;
   }
 
+  function inorder() {
+    const visited = [];
 
+    function traverse(node) {
+      if (node.left) traverse(node.left);
+      visited.push(node.value);
+      if (node.right) traverse(node.right);
+    }
 
+    traverse(root);
+    return visited;
+  }
+
+  function postorder() {
+    const visited = [];
+
+    function traverse(node) {
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+      visited.push(node.value);
+    }
+
+    traverse(root);
+    return visited;
+  }
+
+  // funcion que acepta un nodo y encuentra la altura de ese nodo
+  // la altura de un nodo es el numero de aristas que conenctan
+  // a ese nodo con la hoja mas lejana.
+  // si no se ingresa argumento, regresa la altura de root.
+  function height(node = root) {
+    if (node === null) {
+      return -1;
+    }
+    return 1 + Math.max(height(node.left), height(node.right));
+  }
+
+  // acepta un nodo y regresa su profundidad.
+  // le profundidad es el numero de aristas del root a ese nodo.
+  // retorna null si el valor no existe
+  // si no se proporciona nodo, retorna la altura de root i.e 0.
+  function depth(node = root) {
+    if (node === null) {
+      return node;
+    }
+    let current = root;
+    let count = 0;
+    while (current != null) {
+      if (node.value < current.value) {
+        count++;
+        current = current.left;
+      } else if (node.value > current.value) {
+        count++;
+        current = current.right;
+      } else {
+        return count;
+      }
+    }
+  }
 
   function prettyPrint(node = root, prefix = '', isLeft = true) {
     if (node === null) {
@@ -244,5 +269,7 @@ function Tree(arr) {
     inorder,
     preorder,
     postorder,
+    height,
+    depth,
   };
 }
