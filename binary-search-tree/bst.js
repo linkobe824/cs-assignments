@@ -1,10 +1,3 @@
-const listOfElements = [12, 65, 48, 95, 15, 32, 4, 33];
-
-let tree = Tree(listOfElements);
-tree.prettyPrint();
-
-
-
 function Node(value) {
   return {
     value,
@@ -13,7 +6,7 @@ function Node(value) {
   };
 }
 
-function Tree(arr) {
+export default function Tree(arr) {
   let root = _buildTree(arr);
 
   function _buildTree(arr) {
@@ -83,18 +76,18 @@ function Tree(arr) {
         // se encontro el nodo a eliminar
         //caso 1. no tiene hijos
         if (root.left === null && root.right === null) {
-          delete root;
+          //delete root;
           root = null;
         }
         // caso 2. solo un hijo
         else if (root.left === null) {
           let temp = root;
           root = root.right;
-          delete temp;
+          //delete temp;
         } else if (root.right === null) {
           let temp = root;
           root = root.left;
-          delete temp;
+          //delete temp;
         }
         // caso 3. ambos hijos
         else {
@@ -117,7 +110,7 @@ function Tree(arr) {
           root.value = successor.value;
 
           // elimina sucesor y retorna el root
-          delete successor;
+          //delete successor;
         }
       }
       return root;
@@ -247,17 +240,22 @@ function Tree(arr) {
   // de el subtree derecho y el subtree izquierdo es <= 1 para cada nodo
   function isBalanced() {
     // utilizar bfs para visitar cada nodo
-    let q = [root] 
-    
-    while (q.length > 0) {
-        let node = q.shift();
-        // verificar balance
-        if (Math.abs(height(node.left) - height(node.right)) > 1) return false
+    let q = [root];
 
-        if(node.left) q.push(node.left);
-        if(node.right) q.push(node.right);
+    while (q.length > 0) {
+      let node = q.shift();
+      // verificar balance
+      if (Math.abs(height(node.left) - height(node.right)) > 1) return false;
+
+      if (node.left) q.push(node.left);
+      if (node.right) q.push(node.right);
     }
     return true;
+  }
+
+  function rebalance() {
+    const newTree = inorder();
+    root = _buildTree(newTree);
   }
 
   function prettyPrint(node = root, prefix = '', isLeft = true) {
@@ -288,5 +286,7 @@ function Tree(arr) {
     height,
     depth,
     isBalanced,
+    rebalance,
   };
 }
+
